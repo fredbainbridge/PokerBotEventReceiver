@@ -48,7 +48,7 @@ namespace PokerEventHubReceiver
 
         static async Task ProcessEventHandler(ProcessEventArgs eventArgs)
         {
-            string webhookUrl = System.Environment.GetEnvironmentVariable("WEBHOOK_URL") ?? "";
+            string webhookUrl = System.Environment.GetEnvironmentVariable("EVENT_WEBHOOK_URL") ?? "";
             string token = Environment.GetEnvironmentVariable("TOKEN") ?? "";
            // Write the body of the event to the console window
             Console.WriteLine("\tReceived event: {0}", Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()));
