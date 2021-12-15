@@ -34,15 +34,18 @@ namespace PokerEventHubReceiver
             // Register handlers for processing events and handling errors
             processor.ProcessEventAsync += ProcessEventHandler;
             processor.ProcessErrorAsync += ProcessErrorHandler;
+            while(true) {
+                await processor.StartProcessingAsync();
+
+                // Wait for 30 seconds for the events to be processed
+                await Task.Delay(TimeSpan.FromSeconds(30));
+
+                // Stop the processing
+                await processor.StopProcessingAsync();
+            }
 
             // Start the processing
-            await processor.StartProcessingAsync();
-
-            // Wait for 30 seconds for the events to be processed
-            await Task.Delay(TimeSpan.FromSeconds(30));
-
-            // Stop the processing
-            await processor.StopProcessingAsync();
+            
         }
         static readonly HttpClient client = new HttpClient();
 
