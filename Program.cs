@@ -25,6 +25,7 @@ namespace PokerEventHubReceiver
                 .AddSingleton<Processor>()
                 .BuildServiceProvider();
             
+            ILogger<Program> _logger = serviceProvider.GetRequiredService<ILogger<Program>>();
             Processor processor = serviceProvider.GetRequiredService<Processor>();
             
             string ehubNamespaceConnectionString = System.Environment.GetEnvironmentVariable("EVENTHUB_CONNECTION_STRING") ?? "";
@@ -43,7 +44,7 @@ namespace PokerEventHubReceiver
             processorClient.ProcessErrorAsync += Processor.ProcessErrorHandler;
             while(true) {
                 await processorClient.StartProcessingAsync();
-
+                _logger.LogInformation("Here.");
                 // Wait for 30 seconds for the events to be processed
                 await Task.Delay(TimeSpan.FromSeconds(30));
 
