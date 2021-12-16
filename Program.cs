@@ -44,7 +44,6 @@ namespace PokerEventHubReceiver
             processorClient.ProcessErrorAsync += Processor.ProcessErrorHandler;
             while(true) {
                 await processorClient.StartProcessingAsync();
-                _logger.LogInformation("Here.");
                 // Wait for 30 seconds for the events to be processed
                 await Task.Delay(TimeSpan.FromSeconds(30));
 
